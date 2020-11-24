@@ -13,6 +13,11 @@ class Post(models.Model):
         blank=True,
         db_index=True
     )
+    tags = models.ManyToManyField(
+        'Tag',
+        blank=True,
+        related_name='posts'
+    )
     date_pub = models.DateTimeField(
         auto_now_add=True
     )
@@ -20,6 +25,16 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail_url', kwargs={'slug': self.slug})
 
-    def __string__(self):
-        # return '{}'.format(self.title)
+    def __str__(self):
+        return '{}'.format(self.title)
+
+
+class Tag(models.Model):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True)
+
+    def get_absolute_url(self):
+        return reverse('tag_detail_url', kwargs={'slug': self.slug})
+
+    def __str__(self):
         return self.title
