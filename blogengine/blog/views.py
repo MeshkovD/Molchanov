@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 from .models import Post, Tag
-from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin
+from .utils import ObjectDetailMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
+
 from .forms import TagForm, PostForm
 
 
@@ -48,17 +50,15 @@ class TagUpdate(ObjectUpdateMixin, View):
     model = Tag
     model_form = TagForm
     template = 'blog/tag_update_form.html'
-    # def get(self, request, slug):
-    #     tag = Tag.objects.get(slug__iexact=slug)
-    #     bound_form = TagForm(instance=tag)
-    #     return render(request, 'blog/tag_update_form.html', context={'form': bound_form, 'tag': tag})
-    #
-    # def post(self, request, slug):
-    #     tag = Tag.objects.get(slug__iexact=slug)
-    #     bound_form = TagForm(request.POST, instance=tag)
-    #
-    #     if bound_form.is_valid():
-    #         new_tag = bound_form.save()
-    #         return redirect(new_tag)
-    #     return render(request, 'blog/tag_update_form.html', context={'form': bound_form, 'tag': tag})
 
+
+class PostDelete(ObjectDeleteMixin, View):
+    model = Post
+    template = 'blog/post_delete.html'
+    success_url = 'posts_list'
+
+
+class TagDelete(ObjectDeleteMixin, View):
+    model = Tag
+    template = 'blog/tag_delete.html'
+    success_url = 'tags_list_url'
