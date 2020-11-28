@@ -18,8 +18,8 @@ class TagForm(forms.ModelForm):
 
         if new_slug == 'create':
             raise ValidationError('Slug can not be "create"')
-        if Tag.objects.filter(slug__iexact=new_slug).count():
-            raise ValidationError('Slug must be unoque')
+        # if Tag.objects.filter(slug__iexact=new_slug).count():
+        #     raise ValidationError('Slug must be unoque')
         return new_slug
 
 class PostForm(forms.ModelForm):
