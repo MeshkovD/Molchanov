@@ -6,7 +6,11 @@
 
 {% block content %}
     <h1 class="md-5">Tags:</h1>
-    {% for tag in tags %}
-        <h3><a href="{{ tag.get_absolute_url}}">{{ tag }}</a></h3>
-    {% endfor %}
+    {% if tags %}
+        {% for tag in tags %}
+            <h3><a href="{{ tag.get_absolute_url}}">{{ tag }}</a></h3>
+        {% endfor %}
+    {% else %}
+        <h3>Пока не создано ни одного тега.</h3>
+    {% endif %}
 {% endblock %}
